@@ -3,25 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shubham Chakrawarti - Interactive Portfolio</title>
+    <title>Shubham Chakrawarti - Interactive AI/ML Portfolio</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
-
         :root {
             --bg-color: #030712;
-            --card-bg: #111827;
+            --card-bg: rgba(17, 24, 39, 0.6);
             --border-color: rgba(255, 255, 255, 0.08);
-            --primary-accent: #3b82f6;
-            --secondary-accent: #a855f7;
+            --primary-accent: #3b82f6; /* Electric Blue */
+            --secondary-accent: #a855f7; /* Purple Glow */
+            --accent-green: #10b981; /* Emerald Green */
             --text-primary: #f9fafb;
             --text-secondary: #9ca3af;
+            --terminal-bg: #090d16;
+            --font-display: 'Space Grotesk', sans-serif;
+            --font-body: 'Plus Jakarta Sans', sans-serif;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            cursor: none !important; /* Custom cursor */
         }
 
         html {
@@ -31,12 +37,13 @@
         body {
             background-color: var(--bg-color);
             color: var(--text-primary);
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-family: var(--font-body);
             overflow-x: hidden;
             position: relative;
+            cursor: default;
         }
 
-        /* Custom Mouse Follower */
+        /* Custom Cursor Follower */
         .cursor-follower {
             width: 20px;
             height: 20px;
@@ -52,14 +59,14 @@
         }
 
         .cursor-follower.hovering {
-            width: 50px;
-            height: 50px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1.5px solid rgba(255, 255, 255, 0.6);
             box-shadow: none;
         }
 
-        /* Grid Background Effect */
+        /* Interactive Grid Background */
         .bg-grid {
             position: fixed;
             top: 0;
@@ -69,71 +76,81 @@
             background-image: 
                 linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
-            background-size: 50px 50px;
+            background-size: 60px 60px;
             z-index: -2;
             pointer-events: none;
         }
 
-        /* Glowing Orbs */
+        /* Glowing Background Orbs */
         .orb {
             position: fixed;
             border-radius: 50%;
-            filter: blur(100px);
+            filter: blur(130px);
             z-index: -1;
-            opacity: 0.3;
+            opacity: 0.25;
             pointer-events: none;
-            animation: float 20s infinite alternate;
+            animation: float 25s infinite alternate;
         }
 
         .orb-1 {
-            width: 400px;
-            height: 400px;
+            width: 500px;
+            height: 500px;
             background: var(--primary-accent);
-            top: -100px;
-            left: -100px;
+            top: -150px;
+            left: -150px;
         }
 
         .orb-2 {
-            width: 500px;
-            height: 500px;
+            width: 600px;
+            height: 600px;
             background: var(--secondary-accent);
-            bottom: -150px;
-            right: -150px;
-            animation-delay: -5s;
+            bottom: -200px;
+            right: -200px;
+            animation-delay: -6s;
         }
 
         @keyframes float {
             0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(80px, 50px) scale(1.1); }
+            100% { transform: translate(100px, 80px) scale(1.15); }
         }
 
-        /* Navigation */
+        /* Glassmorphic Navigation */
         nav {
             position: fixed;
             top: 0;
             width: 100%;
-            padding: 25px 50px;
+            padding: 20px 8%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            z-index: 100;
-            backdrop-filter: blur(10px);
-            background: rgba(3, 7, 18, 0.7);
+            z-index: 1000;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            background: rgba(3, 7, 18, 0.65);
             border-bottom: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            padding: 12px 8%;
+            background: rgba(3, 7, 18, 0.9);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
         }
 
         .logo {
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: var(--font-display);
             font-weight: 700;
-            font-size: 22px;
+            font-size: 24px;
             background: linear-gradient(135deg, var(--primary-accent), var(--secondary-accent));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            text-decoration: none;
+            letter-spacing: -0.5px;
         }
 
         .nav-links {
             display: flex;
-            gap: 30px;
+            gap: 35px;
             list-style: none;
         }
 
@@ -168,40 +185,55 @@
 
         /* Hero Section */
         #hero {
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 0 10%;
+            align-items: center;
+            justify-content: space-between;
+            padding: 120px 8% 60px 8%;
             position: relative;
+            gap: 50px;
+        }
+
+        .hero-info {
+            max-width: 55%;
         }
 
         .hero-welcome {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 600;
             color: var(--primary-accent);
             text-transform: uppercase;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.15em;
             margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        h2.hero-name {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 70px;
+        .hero-welcome::before {
+            content: '';
+            width: 25px;
+            height: 2px;
+            background: var(--primary-accent);
+        }
+
+        h1.hero-name {
+            font-family: var(--font-display);
+            font-size: 64px;
             font-weight: 800;
-            letter-spacing: -0.03em;
+            letter-spacing: -0.02em;
             line-height: 1.1;
             margin-bottom: 20px;
-            background: linear-gradient(to right, #ffffff, #9ca3af);
+            background: linear-gradient(135deg, #ffffff 40%, #9ca3af 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         .hero-title-wrapper {
-            font-size: 32px;
+            font-size: 28px;
             font-weight: 600;
             color: var(--text-secondary);
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             display: flex;
             align-items: center;
             gap: 10px;
@@ -221,11 +253,10 @@
         }
 
         .hero-desc {
-            max-width: 600px;
             font-size: 16px;
             color: var(--text-secondary);
-            margin-bottom: 40px;
-            line-height: 1.6;
+            margin-bottom: 35px;
+            line-height: 1.7;
         }
 
         .btn-container {
@@ -234,23 +265,26 @@
         }
 
         .btn {
-            padding: 12px 28px;
+            padding: 12px 30px;
             border-radius: 8px;
             font-weight: 600;
             font-size: 15px;
             text-decoration: none;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .btn-primary {
             background: linear-gradient(135deg, var(--primary-accent), var(--secondary-accent));
             color: #ffffff;
-            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4);
+            box-shadow: 0 4px 20px rgba(168, 85, 247, 0.3);
         }
 
         .btn-primary:hover {
             transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(168, 85, 247, 0.6);
+            box-shadow: 0 8px 25px rgba(168, 85, 247, 0.5);
         }
 
         .btn-secondary {
@@ -265,15 +299,50 @@
             transform: translateY(-3px);
         }
 
-        /* General Section Layout */
+        /* 3D Model Placeholder / Floating Visuals */
+        .hero-visual {
+            max-width: 40%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .avatar-glow {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-accent), var(--secondary-accent));
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 50px rgba(168, 85, 247, 0.4);
+            animation: pulse-avatar 4s infinite alternate;
+        }
+
+        .avatar-glow img {
+            width: 285px;
+            height: 285px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--bg-color);
+        }
+
+        @keyframes pulse-avatar {
+            0% { transform: translateY(0) scale(1); box-shadow: 0 0 40px rgba(59, 130, 246, 0.3); }
+            100% { transform: translateY(-15px) scale(1.02); box-shadow: 0 0 60px rgba(168, 85, 247, 0.5); }
+        }
+
+        /* General Section Design */
         section.content-section {
-            padding: 100px 10%;
+            padding: 100px 8%;
             border-bottom: 1px solid var(--border-color);
         }
 
         .section-header {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 36px;
+            font-family: var(--font-display);
+            font-size: 38px;
             font-weight: 700;
             margin-bottom: 50px;
             position: relative;
@@ -291,19 +360,100 @@
             border-radius: 2px;
         }
 
-        /* About Section */
+        /* Interactive Terminal Console Section */
+        .terminal-container {
+            background-color: var(--terminal-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+            margin-bottom: 60px;
+        }
+
+        .terminal-bar {
+            background-color: rgba(17, 24, 39, 0.9);
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .terminal-dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .dot-red { background-color: #ef4444; }
+        .dot-yellow { background-color: #eab308; }
+        .dot-green { background-color: #22c55e; }
+
+        .terminal-title {
+            font-family: monospace;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .terminal-body {
+            padding: 25px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            color: var(--accent-green);
+            min-height: 350px;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .terminal-history {
+            margin-bottom: 15px;
+            white-space: pre-wrap;
+        }
+
+        .terminal-line {
+            margin-bottom: 8px;
+        }
+
+        .terminal-input-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .terminal-prompt {
+            color: var(--primary-accent);
+            font-weight: bold;
+        }
+
+        .terminal-input {
+            background: transparent;
+            border: none;
+            color: #ffffff;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            outline: none;
+            flex-grow: 1;
+        }
+
+        /* About Section styling */
         .about-grid {
             display: grid;
             grid-template-columns: 1.2fr 1fr;
-            gap: 50px;
-            align-items: center;
+            gap: 60px;
+            align-items: start;
         }
 
         .about-text p {
             font-size: 16px;
             color: var(--text-secondary);
             line-height: 1.8;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .skills-summary-list {
@@ -325,37 +475,39 @@
         .skills-summary-list li::before {
             content: '✦';
             color: var(--secondary-accent);
+            font-weight: bold;
         }
 
         /* Skills Section */
         .skills-category-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 30px;
         }
 
         .skills-card {
-            background: rgba(17, 24, 39, 0.5);
+            background: var(--card-bg);
             border: 1px solid var(--border-color);
             padding: 30px;
             border-radius: 12px;
-            transition: border-color 0.3s, transform 0.3s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             backdrop-filter: blur(10px);
         }
 
         .skills-card:hover {
             border-color: rgba(168, 85, 247, 0.4);
             transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(168, 85, 247, 0.1);
         }
 
         .skills-card h3 {
-            font-size: 18px;
+            font-size: 20px;
             margin-bottom: 20px;
             color: var(--text-primary);
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: var(--font-display);
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
 
         .skills-tags {
@@ -365,26 +517,27 @@
         }
 
         .skill-tag {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.04);
             border: 1px solid var(--border-color);
             padding: 6px 14px;
             border-radius: 20px;
-            font-size: 12px;
+            font-size: 13px;
             color: var(--text-secondary);
             font-weight: 500;
-            transition: background 0.3s, color 0.3s;
+            transition: all 0.3s ease;
         }
 
         .skill-tag:hover {
-            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(168, 85, 247, 0.1));
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(168, 85, 247, 0.15));
             color: var(--text-primary);
-            border-color: rgba(168, 85, 247, 0.3);
+            border-color: rgba(168, 85, 247, 0.4);
+            transform: scale(1.05);
         }
 
-        /* Experience Section (Timeline) */
+        /* Experience Timeline */
         .timeline {
             position: relative;
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
         }
 
@@ -400,28 +553,27 @@
         }
 
         .timeline-item {
-            padding: 10px 40px;
+            padding: 10px 50px;
             position: relative;
-            background-color: inherit;
             width: 50%;
         }
 
         .timeline-item::after {
             content: '';
             position: absolute;
-            width: 16px;
-            height: 16px;
-            right: -8px;
+            width: 18px;
+            height: 18px;
+            right: -9px;
             background-color: var(--bg-color);
             border: 4px solid var(--primary-accent);
-            top: 15px;
+            top: 20px;
             border-radius: 50%;
             z-index: 1;
             transition: all 0.3s ease;
         }
 
         .timeline-item.right::after {
-            left: -8px;
+            left: -9px;
             border-color: var(--secondary-accent);
         }
 
@@ -434,63 +586,110 @@
         }
 
         .timeline-content {
-            padding: 25px;
-            background: rgba(17, 24, 39, 0.5);
-            position: relative;
+            padding: 30px;
+            background: var(--card-bg);
             border-radius: 12px;
             border: 1px solid var(--border-color);
             backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item:hover .timeline-content {
+            border-color: rgba(59, 130, 246, 0.3);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.05);
+            transform: translateY(-2px);
         }
 
         .timeline-item:hover::after {
-            transform: scale(1.3);
+            transform: scale(1.35);
             box-shadow: 0 0 15px var(--primary-accent);
         }
 
         .timeline-content h3 {
-            font-size: 18px;
-            font-family: 'Space Grotesk', sans-serif;
+            font-size: 20px;
+            font-family: var(--font-display);
             margin-bottom: 5px;
         }
 
         .timeline-company {
-            font-size: 14px;
+            font-size: 15px;
             color: var(--primary-accent);
             font-weight: 600;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
         }
 
         .timeline-date {
-            font-size: 12px;
+            font-size: 13px;
             color: var(--text-secondary);
-            margin-bottom: 15px;
+            margin-bottom: 18px;
             font-weight: 500;
         }
 
         .timeline-content ul {
-            list-style-type: circle;
-            margin-left: 15px;
-            font-size: 13px;
+            list-style: none;
+            font-size: 14px;
             color: var(--text-secondary);
         }
 
         .timeline-content li {
-            margin-bottom: 8px;
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 18px;
+            line-height: 1.6;
         }
 
-        /* 3D Projects Grid */
+        .timeline-content li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--secondary-accent);
+        }
+
+        /* Advanced Filterable Projects Grid */
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 45px;
+        }
+
+        .filter-btn {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: linear-gradient(135deg, var(--primary-accent), var(--secondary-accent));
+            border-color: transparent;
+            color: #ffffff;
+            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.25);
+        }
+
         .projects-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 40px;
+            gap: 30px;
         }
 
         .project-card-wrapper {
             perspective: 1000px;
+            transition: all 0.5s ease;
+        }
+
+        .project-card-wrapper.hide {
+            display: none;
         }
 
         .project-card {
-            background: rgba(17, 24, 39, 0.6);
+            background: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 16px;
             padding: 35px;
@@ -500,11 +699,10 @@
             justify-content: space-between;
             position: relative;
             transform-style: preserve-3d;
-            transition: border-color 0.1s, transform 0.1s;
+            transition: border-color 0.1s, transform 0.1s, box-shadow 0.3s;
             overflow: hidden;
         }
 
-        /* Glow Follower Effect inside Card */
         .project-card::before {
             content: '';
             position: absolute;
@@ -513,28 +711,44 @@
             width: 100%;
             height: 100%;
             background: radial-gradient(
-                400px circle at var(--mouse-x, 0) var(--mouse-y, 0),
+                350px circle at var(--mouse-x, 0) var(--mouse-y, 0),
                 rgba(168, 85, 247, 0.1),
-                transparent 40%
+                transparent 50%
             );
             z-index: 1;
             pointer-events: none;
         }
 
         .project-header {
-            transform: translateZ(50px);
+            transform: translateZ(40px);
         }
 
-        .project-icon {
-            font-size: 36px;
+        .project-icon-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 20px;
         }
 
+        .project-icon {
+            font-size: 38px;
+        }
+
+        .project-git-link {
+            color: var(--text-secondary);
+            font-size: 20px;
+            transition: color 0.3s;
+        }
+
+        .project-git-link:hover {
+            color: #ffffff;
+        }
+
         .project-title {
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: var(--font-display);
             font-size: 22px;
             font-weight: 700;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             color: var(--text-primary);
         }
 
@@ -542,7 +756,7 @@
             font-size: 14px;
             color: var(--text-secondary);
             line-height: 1.6;
-            transform: translateZ(30px);
+            transform: translateZ(20px);
         }
 
         .project-footer {
@@ -550,7 +764,7 @@
             justify-content: space-between;
             align-items: center;
             margin-top: 25px;
-            transform: translateZ(40px);
+            transform: translateZ(30px);
         }
 
         .project-tech-stack {
@@ -574,10 +788,250 @@
             color: var(--secondary-accent);
         }
 
-        /* Scroll Animation (Fade and Slide Up) */
+        /* Pulsing animation to highlight a project */
+        .project-card.highlight {
+            animation: highlight-pulse 2s infinite alternate;
+        }
+
+        @keyframes highlight-pulse {
+            0% { border-color: var(--primary-accent); box-shadow: 0 0 10px rgba(59, 130, 246, 0.4); }
+            100% { border-color: var(--secondary-accent); box-shadow: 0 0 25px rgba(168, 85, 247, 0.6); }
+        }
+
+        /* Floating AI Twin Chatbot Widget */
+        .chat-widget-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-accent), var(--secondary-accent));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #ffffff;
+            font-size: 24px;
+            box-shadow: 0 6px 20px rgba(168, 85, 247, 0.4);
+            cursor: pointer;
+            z-index: 1001;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .chat-widget-btn:hover {
+            transform: scale(1.1) rotate(15deg);
+        }
+
+        .chat-widget-window {
+            position: fixed;
+            bottom: 105px;
+            right: 30px;
+            width: 360px;
+            height: 480px;
+            background: var(--terminal-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.7);
+            z-index: 1001;
+            opacity: 0;
+            transform: translateY(20px) scale(0.9);
+            pointer-events: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .chat-widget-window.open {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+        }
+
+        .chat-header {
+            background: rgba(17, 24, 39, 0.9);
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top-left-radius: 16px;
+            border-top-right-radius: 16px;
+        }
+
+        .chat-agent-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .chat-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-accent), var(--secondary-accent));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+        }
+
+        .chat-title h4 {
+            font-family: var(--font-display);
+            font-size: 15px;
+            margin-bottom: 2px;
+        }
+
+        .chat-title span {
+            font-size: 11px;
+            color: var(--accent-green);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .chat-title span::before {
+            content: '●';
+        }
+
+        .chat-close-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 18px;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .chat-close-btn:hover {
+            color: #ffffff;
+        }
+
+        .chat-messages {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .chat-msg {
+            max-width: 80%;
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-size: 13.5px;
+            line-height: 1.5;
+            word-wrap: break-word;
+        }
+
+        .chat-msg.agent {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            align-self: flex-start;
+            border-bottom-left-radius: 3px;
+        }
+
+        .chat-msg.user {
+            background: linear-gradient(135deg, var(--primary-accent), var(--secondary-accent));
+            color: #ffffff;
+            align-self: flex-end;
+            border-bottom-right-radius: 3px;
+        }
+
+        .chat-suggested-prompts {
+            padding: 10px 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            border-top: 1px solid var(--border-color);
+            background: rgba(17, 24, 39, 0.4);
+        }
+
+        .suggested-chip {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            padding: 6px 12px;
+            font-size: 11.5px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .suggested-chip:hover {
+            color: #ffffff;
+            background: rgba(168, 85, 247, 0.15);
+            border-color: rgba(168, 85, 247, 0.4);
+        }
+
+        .chat-input-row {
+            padding: 15px 20px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 10px;
+            background: rgba(17, 24, 39, 0.9);
+            border-bottom-left-radius: 16px;
+            border-bottom-right-radius: 16px;
+        }
+
+        .chat-input {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 8px 16px;
+            color: #ffffff;
+            font-size: 13.5px;
+            outline: none;
+            flex-grow: 1;
+            transition: border-color 0.2s;
+        }
+
+        .chat-input:focus {
+            border-color: var(--primary-accent);
+        }
+
+        .chat-send-btn {
+            background: var(--primary-accent);
+            border: none;
+            color: #ffffff;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .chat-send-btn:hover {
+            background: var(--secondary-accent);
+        }
+
+        /* Matrix Overlay for Secret Command */
+        .matrix-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 999;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .matrix-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Reveal Transitions */
         .reveal {
             opacity: 0;
-            transform: translateY(40px);
+            transform: translateY(45px);
             transition: opacity 0.8s ease, transform 0.8s ease;
         }
 
@@ -586,9 +1040,9 @@
             transform: translateY(0);
         }
 
-        /* Footer */
+        /* Footer Section */
         footer {
-            padding: 50px 10%;
+            padding: 50px 8%;
             background: #020617;
             border-top: 1px solid var(--border-color);
             display: flex;
@@ -597,33 +1051,55 @@
         }
 
         .footer-logo {
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: var(--font-display);
             font-weight: 700;
-            font-size: 18px;
+            font-size: 20px;
             color: var(--text-primary);
         }
 
         .footer-copy {
-            font-size: 12px;
+            font-size: 13px;
             color: var(--text-secondary);
         }
 
-        /* Responsive Design */
+        /* Responsive Breakpoints */
         @media (max-width: 900px) {
             nav {
-                padding: 20px;
+                padding: 15px 5%;
             }
             .nav-links {
-                display: none; /* Hide link bar on mobile for simplicity */
+                display: none; /* simple hidden links on mobile */
             }
             #hero {
-                padding: 0 5%;
+                flex-direction: column-reverse;
+                text-align: center;
+                padding: 100px 5% 40px 5%;
+                justify-content: center;
             }
-            h2.hero-name {
-                font-size: 45px;
+            .hero-info {
+                max-width: 100%;
+            }
+            .hero-welcome {
+                justify-content: center;
+            }
+            h1.hero-name {
+                font-size: 42px;
             }
             .hero-title-wrapper {
-                font-size: 22px;
+                font-size: 20px;
+                justify-content: center;
+            }
+            .hero-visual {
+                max-width: 100%;
+                margin-bottom: 20px;
+            }
+            .avatar-glow {
+                width: 200px;
+                height: 200px;
+            }
+            .avatar-glow img {
+                width: 188px;
+                height: 188px;
             }
             .about-grid {
                 grid-template-columns: 1fr;
@@ -634,39 +1110,52 @@
             }
             .timeline-item {
                 width: 100%;
-                padding-left: 70px;
-                padding-right: 25px;
+                padding-left: 60px;
+                padding-right: 15px;
             }
             .timeline-item::after {
-                left: 23px;
+                left: 22px;
                 right: auto;
             }
             .right {
                 left: 0%;
             }
-            section.content-section {
-                padding: 80px 5%;
+            .terminal-body {
+                font-size: 12px;
+            }
+            .chat-widget-window {
+                width: 320px;
+                bottom: 90px;
+                right: 15px;
+            }
+            .chat-widget-btn {
+                bottom: 20px;
+                right: 20px;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- Mouse Follower -->
+    <!-- Matrix rain canvas for the secret command -->
+    <canvas id="matrix-canvas" class="matrix-overlay"></canvas>
+
+    <!-- Custom Cursor Follower -->
     <div class="cursor-follower" id="follower"></div>
 
-    <!-- Background Grid -->
+    <!-- Interactive Grid Line Background -->
     <div class="bg-grid"></div>
 
-    <!-- Orbs -->
+    <!-- Ambient glowing lights -->
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
 
-    <!-- Navigation -->
-    <nav>
-        <div class="logo">SC.</div>
+    <!-- Navigation Header -->
+    <nav id="navbar">
+        <a href="#hero" class="logo">SC.</a>
         <ul class="nav-links">
             <li><a href="#hero">Home</a></li>
+            <li><a href="#terminal">Console</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#skills">Skills</a></li>
             <li><a href="#experience">Experience</a></li>
@@ -676,36 +1165,68 @@
 
     <!-- Hero Section -->
     <section id="hero">
-        <div class="hero-welcome">Welcome to my universe</div>
-        <h2 class="hero-name">SHUBHAM CHAKRAWARTI</h2>
-        <div class="hero-title-wrapper">
-            I'm a <span class="typing-container"><span class="typing"></span></span>
+        <div class="hero-info">
+            <div class="hero-welcome">Systems Operational</div>
+            <h1 class="hero-name">SHUBHAM CHAKRAWARTI</h1>
+            <div class="hero-title-wrapper">
+                I'm a <span class="typing-container"><span class="typing"></span></span>
+            </div>
+            <p class="hero-desc">
+                AI/ML Engineer & Full Stack Developer with 2 years of experience building scalable intelligent pipelines, deep learning computer vision frameworks, and interactive web portals.
+            </p>
+            <div class="btn-container">
+                <a href="#projects" class="btn btn-primary"><i class="fa-solid fa-code-branch"></i> Explore Systems</a>
+                <a href="shubham_cv_updated.pdf" target="_blank" class="btn btn-secondary"><i class="fa-solid fa-file-pdf"></i> Retrieve CV</a>
+            </div>
         </div>
-        <p class="hero-desc">
-            A software engineer and AI/ML developer passionate about creating full-stack web applications, designing smart AI integrations, and developing interactive data analytics tools.
-        </p>
-        <div class="btn-container">
-            <a href="#projects" class="btn btn-primary">Explore Work</a>
-            <a href="shubham_cv_updated.pdf" target="_blank" class="btn btn-secondary">View Resume</a>
+        <div class="hero-visual">
+            <div class="avatar-glow">
+                <img src="profile_pic.jpg" alt="Shubham Chakrawarti">
+            </div>
+        </div>
+    </section>
+
+    <!-- Terminal Command Center Section -->
+    <section id="terminal" class="content-section reveal">
+        <h2 class="section-header">Developer Console</h2>
+        <div class="terminal-container">
+            <div class="terminal-bar">
+                <div class="terminal-dots">
+                    <div class="terminal-dot dot-red"></div>
+                    <div class="terminal-dot dot-yellow"></div>
+                    <div class="terminal-dot dot-green"></div>
+                </div>
+                <div class="terminal-title">shubham@terminal:~</div>
+            </div>
+            <div class="terminal-body" id="term-body">
+                <div class="terminal-history" id="term-history">Welcome to Shubham's Command Center.
+Type 'help' to see list of available commands.
+
+</div>
+                <div class="terminal-input-row">
+                    <span class="terminal-prompt">shubham@core:~$</span>
+                    <input type="text" class="terminal-input" id="term-input" autocomplete="off" autofocus>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- About Section -->
     <section id="about" class="content-section reveal">
-        <h2 class="section-header">About Me</h2>
+        <h2 class="section-header">About Agent</h2>
         <div class="about-grid">
             <div class="about-text">
                 <p>
-                    I am a results-oriented Software Engineer and AI/ML Developer with 2 years of experience. I specialize in building robust, interactive web applications using modern JavaScript/TypeScript and Python frameworks.
+                    I am a results-driven **AI/ML Engineer** and **Full Stack Developer** with 2 years of experience. I bridge the gap between analytical data intelligence and clean, responsive application engineering.
                 </p>
                 <p>
-                    My experience spans developing large-scale full-stack projects, designing clean, efficient REST APIs, and training advanced predictive machine learning models to solve complex real-world challenges.
+                    My experience includes developing analytics dashboards at **Deloitte**, engineering scalable microservice infrastructures at **JPMorgan Chase**, and building complex deep learning pipelines. I specialize in developing full-stack SaaS tools and integrating models into production.
                 </p>
                 <ul class="skills-summary-list">
-                    <li>AI/ML Engineering</li>
-                    <li>Full-Stack Web Dev</li>
-                    <li>REST API Design</li>
-                    <li>Data Science & Analytics</li>
+                    <li>Deep Neural Networks</li>
+                    <li>Computer Vision Systems</li>
+                    <li>SaaS Architecture & APIs</li>
+                    <li>Distributed Event Streaming</li>
                 </ul>
             </div>
         </div>
@@ -713,86 +1234,87 @@
 
     <!-- Skills Section -->
     <section id="skills" class="content-section reveal">
-        <h2 class="section-header">Technical Skills</h2>
+        <h2 class="section-header">Core Capabilities</h2>
         <div class="skills-category-grid">
             
             <div class="skills-card">
-                <h3><span>💻</span> Programming</h3>
+                <h3><span><i class="fa-solid fa-code"></i></span> Languages</h3>
                 <div class="skills-tags">
                     <span class="skill-tag">Python</span>
-                    <span class="skill-tag">JavaScript</span>
+                    <span class="skill-tag">JavaScript (ES6+)</span>
                     <span class="skill-tag">TypeScript</span>
                     <span class="skill-tag">Java</span>
                     <span class="skill-tag">SQL</span>
                     <span class="skill-tag">C/C++</span>
-                    <span class="skill-tag">Bash</span>
                 </div>
             </div>
 
             <div class="skills-card">
-                <h3><span>🧠</span> AI & Machine Learning</h3>
+                <h3><span><i class="fa-solid fa-brain"></i></span> AI & Neural Networks</h3>
                 <div class="skills-tags">
                     <span class="skill-tag">TensorFlow</span>
                     <span class="skill-tag">Keras</span>
+                    <span class="skill-tag">PyTorch</span>
+                    <span class="skill-tag">OpenCV</span>
+                    <span class="skill-tag">MediaPipe</span>
                     <span class="skill-tag">Scikit-Learn</span>
-                    <span class="skill-tag">NLP</span>
-                    <span class="skill-tag">Computer Vision</span>
-                    <span class="skill-tag">GenAI</span>
                 </div>
             </div>
 
             <div class="skills-card">
-                <h3><span>🌐</span> Web Frameworks</h3>
+                <h3><span><i class="fa-solid fa-cubes"></i></span> Web Architectures</h3>
                 <div class="skills-tags">
                     <span class="skill-tag">React.js</span>
                     <span class="skill-tag">Node.js</span>
                     <span class="skill-tag">Express.js</span>
-                    <span class="skill-tag">Angular</span>
-                    <span class="skill-tag">Flask</span>
-                    <span class="skill-tag">REST APIs</span>
+                    <span class="skill-tag">RESTful APIs</span>
+                    <span class="skill-tag">WebSockets</span>
+                    <span class="skill-tag">Redux</span>
                 </div>
             </div>
 
             <div class="skills-card">
-                <h3><span>🛠️</span> Dev Tools & Databases</h3>
+                <h3><span><i class="fa-solid fa-screwdriver-wrench"></i></span> Platforms & DevOps</h3>
                 <div class="skills-tags">
-                    <span class="skill-tag">MongoDB</span>
-                    <span class="skill-tag">SQL</span>
                     <span class="skill-tag">Docker</span>
-                    <span class="skill-tag">Git/GitHub</span>
-                    <span class="skill-tag">Linux</span>
-                    <span class="skill-tag">AWS/Azure</span>
+                    <span class="skill-tag">AWS Cloud</span>
+                    <span class="skill-tag">Azure</span>
+                    <span class="skill-tag">Git & CI/CD</span>
+                    <span class="skill-tag">PostgreSQL</span>
+                    <span class="skill-tag">MongoDB</span>
                 </div>
             </div>
 
         </div>
     </section>
 
-    <!-- Experience Section -->
+    <!-- Experience Timeline -->
     <section id="experience" class="content-section reveal">
-        <h2 class="section-header">Experience</h2>
+        <h2 class="section-header">Operational Timeline</h2>
         <div class="timeline">
             
             <div class="timeline-item left">
                 <div class="timeline-content">
-                    <h3>Software Engineer Intern</h3>
+                    <h3>Data Analyst</h3>
                     <div class="timeline-company">Deloitte</div>
                     <div class="timeline-date">Dec 2025 - Jan 2026</div>
                     <ul>
-                        <li>Processed and analyzed large-scale business datasets using Python (Pandas/NumPy) to uncover metrics.</li>
-                        <li>Designed interactive executive dashboards in Tableau and Power BI, boosting reporting speed by 15%.</li>
+                        <li>Automated business intelligence dashboards and ETL pipelines, boosting pipeline efficiency and data processing speeds by 35%.</li>
+                        <li>Built and tuned predictive analytical models using Scikit-Learn to assist in corporate growth forecasts.</li>
+                        <li>Refactored complex database queries and created Tableau interfaces for executive visualization reports.</li>
                     </ul>
                 </div>
             </div>
 
             <div class="timeline-item right">
                 <div class="timeline-content">
-                    <h3>Data Analyst Intern</h3>
+                    <h3>Software Engineer</h3>
                     <div class="timeline-company">JPMorgan Chase & Co.</div>
                     <div class="timeline-date">Sep 2025 - Oct 2025</div>
                     <ul>
-                        <li>Simulated real-time financial reporting backend APIs and data processing frameworks in Python.</li>
-                        <li>Implemented dynamic React components for stock price visualization, reducing data processing latency by 10%.</li>
+                        <li>Developed responsive React portal views linked to optimized Node.js microservice APIs for financial transaction monitoring.</li>
+                        <li>Improved backend systems efficiency, decreasing endpoint response times by 20%.</li>
+                        <li>Configured and containerized main applications using Docker and Kubernetes to facilitate microservices orchestration.</li>
                     </ul>
                 </div>
             </div>
@@ -803,8 +1325,8 @@
                     <div class="timeline-company">YBI Foundation</div>
                     <div class="timeline-date">Oct 2024 - Feb 2025</div>
                     <ul>
-                        <li>Developed and optimized deep learning LSTM models, delivering a 15% boost in time-series forecasting accuracy.</li>
-                        <li>Built and evaluated ML classifiers (regression, forest models) using Scikit-Learn.</li>
+                        <li>Constructed deep learning models using TensorFlow, obtaining 94% classification precision across target sets.</li>
+                        <li>Cleaned and mapped large arrays of sequential training data to build robust inference structures.</li>
                     </ul>
                 </div>
             </div>
@@ -812,49 +1334,123 @@
         </div>
     </section>
 
-    <!-- 3D Projects Section -->
+    <!-- Filterable Projects Section -->
     <section id="projects" class="content-section reveal">
-        <h2 class="section-header">Projects</h2>
+        <h2 class="section-header">Deployments (Projects)</h2>
+        
+        <div class="filter-container">
+            <button class="filter-btn active" onclick="filterProjects('all')">All System</button>
+            <button class="filter-btn" onclick="filterProjects('ai')">AI & ML</button>
+            <button class="filter-btn" onclick="filterProjects('cv')">Computer Vision</button>
+            <button class="filter-btn" onclick="filterProjects('fullstack')">Full-Stack</button>
+        </div>
+
         <div class="projects-grid">
             
-            <div class="project-card-wrapper">
-                <div class="project-card">
+            <!-- Project 1 -->
+            <div class="project-card-wrapper" data-category="fullstack ai">
+                <div class="project-card" id="card-sonoma">
                     <div class="project-header">
-                        <div class="project-icon">💬</div>
-                        <div class="project-title">Hiring Assistant Chatbot</div>
-                        <p class="project-desc">An AI screening chatbot that interviews candidates dynamically based on their tech stacks and scores answers in real time.</p>
-                    </div>
-                    <div class="project-footer">
-                        <span class="project-tech-stack">React, Node.js, GenAI</span>
-                        <a href="https://shubham-potfolio.vercel.app/" target="_blank" class="project-link">Live Link ↗</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="project-card-wrapper">
-                <div class="project-card">
-                    <div class="project-header">
-                        <div class="project-icon">🎥</div>
+                        <div class="project-icon-row">
+                            <span class="project-icon">🧠</span>
+                            <a href="https://github.com/shubha9696/sonoma-ai-multimodal" target="_blank" class="project-git-link"><i class="fa-brands fa-github"></i></a>
+                        </div>
                         <div class="project-title">Sonoma AI Multimodal</div>
-                        <p class="project-desc">Full-stack platform capable of auto-generating video captions and transcribing media audio files with low latency.</p>
+                        <p class="project-desc">A full-stack premium AI orchestrator featuring chat models, video semantic captioning, transcription, and subscription integrations.</p>
                     </div>
                     <div class="project-footer">
-                        <span class="project-tech-stack">React, Express, TensorFlow</span>
-                        <a href="https://shubham-potfolio.vercel.app/" target="_blank" class="project-link">Live Link ↗</a>
+                        <span class="project-tech-stack">React, Node.js, Express, MongoDB</span>
+                        <a href="https://github.com/shubha9696/sonoma-ai-multimodal" target="_blank" class="project-link">View Repo ↗</a>
                     </div>
                 </div>
             </div>
 
-            <div class="project-card-wrapper">
-                <div class="project-card">
+            <!-- Project 2 -->
+            <div class="project-card-wrapper" data-category="ai">
+                <div class="project-card" id="card-hiring">
                     <div class="project-header">
-                        <div class="project-icon">🗺️</div>
-                        <div class="project-title">Google Maps Clone</div>
-                        <p class="project-desc">A web map clone featuring route plotting, location autocompletion, responsive markers, and maps API integration.</p>
+                        <div class="project-icon-row">
+                            <span class="project-icon">🤖</span>
+                            <a href="https://github.com/shubha9696/hiring-assistant-chatbot" target="_blank" class="project-git-link"><i class="fa-brands fa-github"></i></a>
+                        </div>
+                        <div class="project-title">Hiring Assistant Bot</div>
+                        <p class="project-desc">An intelligent recruitment screening agent that processes candidate resumes, runs technical screening questions, and ranks applicants.</p>
                     </div>
                     <div class="project-footer">
-                        <span class="project-tech-stack">React, Mapbox, Geolocation</span>
-                        <a href="https://shubham-potfolio.vercel.app/" target="_blank" class="project-link">Live Link ↗</a>
+                        <span class="project-tech-stack">TypeScript, React, Node.js, NLP</span>
+                        <a href="https://github.com/shubha9696/hiring-assistant-chatbot" target="_blank" class="project-link">View Repo ↗</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 3 -->
+            <div class="project-card-wrapper" data-category="cv ai">
+                <div class="project-card" id="card-distance">
+                    <div class="project-header">
+                        <div class="project-icon-row">
+                            <span class="project-icon">📷</span>
+                            <a href="https://github.com/shubha9696/Distance_Measurement_Single_Camera" target="_blank" class="project-git-link"><i class="fa-brands fa-github"></i></a>
+                        </div>
+                        <div class="project-title">Single Camera Speed & Distance</div>
+                        <p class="project-desc">Real-time object distance measurement and speed estimation pipeline powered by custom OpenCV geometry and MediaPipe mapping.</p>
+                    </div>
+                    <div class="project-footer">
+                        <span class="project-tech-stack">Python, OpenCV, MediaPipe</span>
+                        <a href="https://github.com/shubha9696/Distance_Measurement_Single_Camera" target="_blank" class="project-link">View Repo ↗</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 4 -->
+            <div class="project-card-wrapper" data-category="cv fullstack">
+                <div class="project-card" id="card-smartsession">
+                    <div class="project-header">
+                        <div class="project-icon-row">
+                            <span class="project-icon">👁️</span>
+                            <a href="https://github.com/shubha9696/smartsession" target="_blank" class="project-git-link"><i class="fa-brands fa-github"></i></a>
+                        </div>
+                        <div class="project-title">SmartSession Monitor</div>
+                        <p class="project-desc">AI Student engagement monitoring tool that analyzes webcam video feeds to detect expressions and flag confusion metrics live.</p>
+                    </div>
+                    <div class="project-footer">
+                        <span class="project-tech-stack">JavaScript, React, TensorFlow.js</span>
+                        <a href="https://github.com/shubha9696/smartsession" target="_blank" class="project-link">View Repo ↗</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 5 -->
+            <div class="project-card-wrapper" data-category="ai">
+                <div class="project-card" id="card-medical">
+                    <div class="project-header">
+                        <div class="project-icon-row">
+                            <span class="project-icon">🩺</span>
+                            <a href="https://github.com/shubha9696/ai-medical-diagnosis-system" target="_blank" class="project-git-link"><i class="fa-brands fa-github"></i></a>
+                        </div>
+                        <div class="project-title">AI Medical Diagnosis</div>
+                        <p class="project-desc">Deep learning diagnostics tool capable of parsing medical images to assist healthcare workers in automated anomaly detection.</p>
+                    </div>
+                    <div class="project-footer">
+                        <span class="project-tech-stack">Python, TensorFlow, Scikit-learn</span>
+                        <a href="https://github.com/shubha9696/ai-medical-diagnosis-system" target="_blank" class="project-link">View Repo ↗</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 6 -->
+            <div class="project-card-wrapper" data-category="fullstack">
+                <div class="project-card" id="card-landbuilder">
+                    <div class="project-header">
+                        <div class="project-icon-row">
+                            <span class="project-icon">🏗️</span>
+                            <a href="https://github.com/shubha9696/landbuilder" target="_blank" class="project-git-link"><i class="fa-brands fa-github"></i></a>
+                        </div>
+                        <div class="project-title">LandBuilder Platform</div>
+                        <p class="project-desc">Interactive geographical buildable land analysis application that estimates topography slopes and maps coordinate boundaries.</p>
+                    </div>
+                    <div class="project-footer">
+                        <span class="project-tech-stack">TypeScript, React, Mapbox APIs</span>
+                        <a href="https://github.com/shubha9696/landbuilder" target="_blank" class="project-link">View Repo ↗</a>
                     </div>
                 </div>
             </div>
@@ -862,15 +1458,42 @@
         </div>
     </section>
 
+    <!-- Floating AI Twin Widget -->
+    <div class="chat-widget-btn" onclick="toggleChat()"><i class="fa-solid fa-robot"></i></div>
+    <div class="chat-widget-window" id="chat-window">
+        <div class="chat-header">
+            <div class="chat-agent-info">
+                <div class="chat-avatar"><i class="fa-solid fa-wave-square"></i></div>
+                <div class="chat-title">
+                    <h4>Alexa (Shubh's AI)</h4>
+                    <span>Active</span>
+                </div>
+            </div>
+            <button class="chat-close-btn" onclick="toggleChat()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+            <div class="chat-msg agent">Hello! I'm Alexa, Shubham's AI Assistant. Ask me anything about his credentials, projects, or command-line system!</div>
+        </div>
+        <div class="chat-suggested-prompts">
+            <div class="suggested-chip" onclick="askPreset('Tell me about Shubham\'s experience')">Experience</div>
+            <div class="suggested-chip" onclick="askPreset('Show me his AI projects')">AI Projects</div>
+            <div class="suggested-chip" onclick="askPreset('What is his education?')">Education</div>
+        </div>
+        <div class="chat-input-row">
+            <input type="text" class="chat-input" id="chat-input" placeholder="Type a message..." onkeydown="if(event.key === 'Enter') sendChatMessage()">
+            <button class="chat-send-btn" onclick="sendChatMessage()"><i class="fa-solid fa-paper-plane"></i></button>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer>
         <div class="footer-logo">SC.</div>
-        <div class="footer-copy">&copy; 2026 Shubham Chakrawarti. Built with ❤️ and interactive 3D elements.</div>
+        <div class="footer-copy">&copy; 2026 Shubham Chakrawarti. Operational Node.</div>
     </footer>
 
     <!-- Interactive Javascript Logic -->
     <script>
-        // Custom Mouse Follower
+        // Custom Mouse Follower Lag Effect
         const follower = document.getElementById('follower');
         let mouseX = 0, mouseY = 0;
         let followerX = 0, followerY = 0;
@@ -880,7 +1503,6 @@
             mouseY = e.clientY;
         });
 
-        // Smooth lag follow loop
         function tick() {
             followerX += (mouseX - followerX) * 0.15;
             followerY += (mouseY - followerY) * 0.15;
@@ -890,14 +1512,14 @@
         }
         tick();
 
-        // Mouse hover scaling
-        const hoverables = document.querySelectorAll('a, button, .skills-card, .timeline-content');
+        // Mouse hover scaling for interactive elements
+        const hoverables = document.querySelectorAll('a, button, .skills-card, .timeline-content, .suggested-chip, .filter-btn');
         hoverables.forEach(item => {
             item.addEventListener('mouseenter', () => follower.classList.add('hovering'));
             item.addEventListener('mouseleave', () => follower.classList.remove('hovering'));
         });
 
-        // Typing effect
+        // Typing dynamic banner effect
         const words = ["Software Engineer", "AI/ML Developer", "Full Stack Developer", "Data Analyst"];
         let wordIdx = 0;
         let charIdx = 0;
@@ -916,18 +1538,18 @@
 
             if (!isDeleting && charIdx === currentWord.length) {
                 isDeleting = true;
-                setTimeout(type, 1500); // Wait on word
+                setTimeout(type, 1800); // Hold word
             } else if (isDeleting && charIdx === 0) {
                 isDeleting = false;
                 wordIdx = (wordIdx + 1) % words.length;
-                setTimeout(type, 300); // Small pause before typing next
+                setTimeout(type, 300); // pause before next
             } else {
-                setTimeout(type, isDeleting ? 40 : 80);
+                setTimeout(type, isDeleting ? 30 : 60);
             }
         }
         type();
 
-        // 3D Card Hover Effect
+        // 3D Tilt Project Cards
         const cards = document.querySelectorAll('.project-card');
         cards.forEach(card => {
             card.addEventListener('mousemove', (e) => {
@@ -935,15 +1557,13 @@
                 const x = e.clientX - rect.left;
                 const y = e.clientY - rect.top;
                 
-                // Track mouse inside card for glow border
                 card.style.setProperty('--mouse-x', `${x}px`);
                 card.style.setProperty('--mouse-y', `${y}px`);
 
-                // 3D Rotation calculations
                 const xc = rect.width / 2;
                 const yc = rect.height / 2;
-                const angleX = (yc - y) / 12;
-                const angleY = (x - xc) / 12;
+                const angleX = (yc - y) / 10;
+                const angleY = (x - xc) / 10;
                 
                 card.style.transform = `perspective(1000px) rotateX(${angleX}deg) rotateY(${angleY}deg) scale(1.03)`;
             });
@@ -953,7 +1573,30 @@
             });
         });
 
-        // Scroll Reveal Effect
+        // Filter Projects logic
+        function filterProjects(category) {
+            const items = document.querySelectorAll('.project-card-wrapper');
+            const buttons = document.querySelectorAll('.filter-btn');
+            
+            // Set active button
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+                if(btn.textContent.toLowerCase().includes(category) || (category === 'all' && btn.textContent.toLowerCase().includes('all'))) {
+                    btn.classList.add('active');
+                }
+            });
+
+            items.forEach(item => {
+                const categories = item.getAttribute('data-category').split(' ');
+                if (category === 'all' || categories.includes(category)) {
+                    item.classList.remove('hide');
+                } else {
+                    item.classList.add('hide');
+                }
+            });
+        }
+
+        // Scroll Reveal logic
         const reveals = document.querySelectorAll('.reveal');
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -961,9 +1604,211 @@
                     entry.target.classList.add('active');
                 }
             });
-        }, { threshold: 0.15 });
+        }, { threshold: 0.1 });
 
         reveals.forEach(element => revealObserver.observe(element));
+
+        // Interactive Chatbot logic
+        const chatWindow = document.getElementById('chat-window');
+        const chatMessages = document.getElementById('chat-messages');
+        const chatInput = document.getElementById('chat-input');
+
+        function toggleChat() {
+            chatWindow.classList.toggle('open');
+        }
+
+        function addChatMessage(sender, text) {
+            const msg = document.createElement('div');
+            msg.classList.add('chat-msg', sender);
+            msg.innerHTML = text;
+            chatMessages.appendChild(msg);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function askPreset(prompt) {
+            addChatMessage('user', prompt);
+            setTimeout(() => respondToQuery(prompt.toLowerCase()), 500);
+        }
+
+        function sendChatMessage() {
+            const text = chatInput.value.trim();
+            if (!text) return;
+            addChatMessage('user', text);
+            chatInput.value = '';
+            setTimeout(() => respondToQuery(text.toLowerCase()), 500);
+        }
+
+        function respondToQuery(query) {
+            let response = "I'm not sure about that. Try asking about his experience, projects, or education!";
+            
+            if (query.includes('experience') || query.includes('work') || query.includes('job')) {
+                response = "Shubham has worked as a **Data Analyst** at **Deloitte** (automated analytical dashboards, 35% speedup) and a **Software Engineer** at **JPMorgan Chase & Co** (React & Node.js microservices). Click Experience in the nav bar to see details!";
+                document.getElementById('navbar').querySelector('a[href="#experience"]').click();
+            } else if (query.includes('ai') || query.includes('project') || query.includes('portfolio')) {
+                response = "Shubham has built multiple high-impact projects including **Sonoma AI Multimodal**, the **Hiring Assistant Chatbot**, and a **Distance Measurement System**. Highlighting them for you!";
+                document.getElementById('navbar').querySelector('a[href="#projects"]').click();
+                filterProjects('ai');
+                document.querySelectorAll('[data-category*="ai"] .project-card').forEach(card => {
+                    card.classList.add('highlight');
+                    setTimeout(() => card.classList.remove('highlight'), 3000);
+                });
+            } else if (query.includes('education') || query.includes('college') || query.includes('university') || query.includes('degree')) {
+                response = "He is completing a **B.Tech in CSE (Artificial Intelligence)** from **Parul University** (GPA: 7.8/10).";
+            } else if (query.includes('contact') || query.includes('email') || query.includes('phone') || query.includes('linkedin')) {
+                response = "Contact details: Email is **shubham2004.hc@gmail.com**, Phone is **+91 9696137126**, LinkedIn is **linkedin.com/in/shubham-chakrawarti-27764836a**.";
+            } else if (query.includes('command') || query.includes('terminal') || query.includes('console')) {
+                response = "Scroll up to the **Developer Console** section and try typing commands like `help`, `skills`, or `secret`!";
+                document.getElementById('navbar').querySelector('a[href="#terminal"]').click();
+                document.getElementById('term-input').focus();
+            } else if (query.includes('resume') || query.includes('cv')) {
+                response = "You can download/retrieve his updated resume by clicking the **Retrieve CV** button in the hero section or typing `resume` in the console.";
+            }
+
+            addChatMessage('agent', response);
+        }
+
+        // Developer Console Interactive Scripting
+        const termInput = document.getElementById('term-input');
+        const termHistory = document.getElementById('term-history');
+        const termBody = document.getElementById('term-body');
+
+        termInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const command = termInput.value.trim();
+                termInput.value = '';
+                executeConsoleCommand(command);
+            }
+        });
+
+        // Focus terminal on click
+        termBody.addEventListener('click', () => {
+            termInput.focus();
+        });
+
+        function outputToConsole(text) {
+            termHistory.textContent += text + "\n";
+            termBody.scrollTop = termBody.scrollHeight;
+        }
+
+        function executeConsoleCommand(rawCmd) {
+            const cmd = rawCmd.toLowerCase().trim();
+            outputToConsole("shubham@core:~$ " + rawCmd);
+
+            if (!cmd) return;
+
+            switch (cmd) {
+                case 'help':
+                    outputToConsole("Available commands:\n" +
+                                    "  help        - List all active commands\n" +
+                                    "  about       - Retrieve biography of the engineer\n" +
+                                    "  skills      - List core technical stacks\n" +
+                                    "  experience  - Show commercial experience history\n" +
+                                    "  projects    - Highlight deployments\n" +
+                                    "  resume      - Open/Download updated resume\n" +
+                                    "  contact     - Display communication coordinates\n" +
+                                    "  clear       - Wipe console outputs\n" +
+                                    "  secret      - Operationalize the Matrix mode");
+                    break;
+                case 'about':
+                    outputToConsole("Shubham Chakrawarti - AI/ML Engineer & Full Stack Developer.\n" +
+                                    "Has 2 years of experience developing deep learning architectures and full-stack web platforms.");
+                    break;
+                case 'skills':
+                    outputToConsole("Technical Capabilities:\n" +
+                                    "  Languages : Python, JS/TS, Java, SQL, C/C++\n" +
+                                    "  AI/ML     : TensorFlow, Keras, PyTorch, OpenCV, MediaPipe, Scikit-learn\n" +
+                                    "  Web Frameworks : React.js, Node.js, Express.js, REST APIs, WebSockets\n" +
+                                    "  DevOps/DB : Docker, AWS, Azure, PostgreSQL, MongoDB, Git & CI/CD");
+                    break;
+                case 'experience':
+                    outputToConsole("History Node:\n" +
+                                    "  1. Deloitte - Data Analyst (Dec 2025 - Jan 2026)\n" +
+                                    "     * Automated dashboards, improved processing speeds by 35%\n" +
+                                    "  2. JPMorgan Chase & Co. - Software Engineer (Sep 2025 - Oct 2025)\n" +
+                                    "     * React portals, microservices latency reduction by 20%\n" +
+                                    "  3. YBI Foundation - AI/ML Intern (Oct 2024 - Feb 2025)\n" +
+                                    "     * Built TF classification models with 94% accuracy");
+                    break;
+                case 'projects':
+                    outputToConsole("Highlighting Project grid and filtering to AI...");
+                    filterProjects('ai');
+                    document.getElementById('navbar').querySelector('a[href="#projects"]').click();
+                    break;
+                case 'resume':
+                    outputToConsole("Redirecting to CV file retrieve...");
+                    window.open('shubham_cv_updated.pdf', '_blank');
+                    break;
+                case 'contact':
+                    outputToConsole("Coordinates:\n" +
+                                    "  Email: shubham2004.hc@gmail.com\n" +
+                                    "  Phone: +91 9696137126\n" +
+                                    "  LinkedIn: linkedin.com/in/shubham-chakrawarti-27764836a");
+                    break;
+                case 'clear':
+                    termHistory.textContent = '';
+                    break;
+                case 'secret':
+                    outputToConsole("Executing Matrix digital rain script...");
+                    triggerMatrixRain();
+                    break;
+                default:
+                    outputToConsole("Command not found: '" + rawCmd + "'. Type 'help' for instructions.");
+            }
+        }
+
+        // Matrix Digital Rain Effect Code
+        let matrixInterval;
+        function triggerMatrixRain() {
+            const canvas = document.getElementById('matrix-canvas');
+            canvas.classList.add('active');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            const columns = canvas.width / 20;
+            const yPositions = Array(Math.floor(columns)).fill(0);
+            
+            function drawMatrix() {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                ctx.fillStyle = '#0f0';
+                ctx.font = '15px monospace';
+                
+                yPositions.forEach((y, index) => {
+                    const text = String.fromCharCode(Math.random() * 128);
+                    const x = index * 20;
+                    ctx.fillText(text, x, y);
+                    
+                    if (y > 100 + Math.random() * 10000) {
+                        yPositions[index] = 0;
+                    } else {
+                        yPositions[index] = y + 20;
+                    }
+                });
+            }
+            
+            if (matrixInterval) clearInterval(matrixInterval);
+            matrixInterval = setInterval(drawMatrix, 35);
+            
+            // Stop after 6 seconds
+            setTimeout(() => {
+                clearInterval(matrixInterval);
+                canvas.classList.remove('active');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                outputToConsole("Matrix mode disabled.");
+            }, 6000);
+        }
+
+        // Window resize canvas fit
+        window.addEventListener('resize', () => {
+            const canvas = document.getElementById('matrix-canvas');
+            if (canvas.classList.contains('active')) {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+        });
     </script>
 </body>
 </html>
